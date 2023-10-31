@@ -11,6 +11,24 @@
     <link rel="shortcut icon" href="TemplateData/favicon.ico" />
     <link rel="stylesheet" href="TemplateData/style.css" />
   </head>
+
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAx9SUYHQQCQxC5VYa0JCHwnUo6tsToEOo",
+      authDomain: "englabforfilm-ab73b.firebaseapp.com",
+      databaseURL:
+        "https://englabforfilm-ab73b-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "englabforfilm-ab73b",
+      storageBucket: "englabforfilm-ab73b.appspot.com",
+      messagingSenderId: "1075267591555",
+      appId: "1:1075267591555:web:50718062b1c59177acaab6",
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
   <body
     class="dark"
     style="background-color: #000"
@@ -28,15 +46,15 @@
     </div>
     <script>
             const buildUrl = "Build";
-            const loaderUrl = buildUrl + "/EnglabForFilm.loader.js";
+            const loaderUrl = buildUrl + "/build.loader.js";
             const config = {
-              dataUrl: buildUrl + "/EnglabForFilm.data.unityweb",
-              frameworkUrl: buildUrl + "/EnglabForFilm.framework.js.unityweb",
-              codeUrl: buildUrl + "/EnglabForFilm.wasm.unityweb",
+              dataUrl: buildUrl + "/build.data.unityweb",
+              frameworkUrl: buildUrl + "/build.framework.js.unityweb",
+              codeUrl: buildUrl + "/build.wasm.unityweb",
               streamingAssetsUrl: "StreamingAssets",
               companyName: "Sermtat",
               productName: "U.VR-Movie-WebGL",
-              productVersion: "0.62-7-Oct-2023 6:26 PM",
+              productVersion: "0.72-31-Oct-2023 11:49 PM",
             };
 
             const container = document.querySelector("#unity-container");
@@ -61,6 +79,8 @@
                 progressBarEmpty.style.display = "";
                 progressBarFull.style.width = `${100 * progress}%`;
               }).then((unityInstance) => {
+                this.unityInstance = unityInstance;
+                this.firebase = firebase;
                 loadingCover.style.display = "none";
               }).catch((message) => {
                 alert(message);
