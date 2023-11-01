@@ -40,11 +40,10 @@ body {
     align-items: center;
 }
 #unity-logo {
-    text-align: center;
+  text-align: center;
 }
 #unity-logo img {
-  max-width: 48px;
-  max-height: 48px;
+  max-width: 50%;
 }
 #unity-progress-bar-empty {
     width: 80%;
