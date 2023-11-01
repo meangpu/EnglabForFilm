@@ -29,15 +29,13 @@
     firebase.initializeApp(firebaseConfig);
   </script>
 
-  <body
-    class="dark"
-    style="background-color: #000"
-  >
+  <body class="dark" style="background-color: #000">
     <div id="unity-container" class="unity-desktop">
       <canvas id="unity-canvas"></canvas>
     </div>
     <div id="loading-cover" style="display: none">
       <div id="unity-loading-bar">
+        <div id="unity-logo"><img src="loading.gif" /></div>
         <div id="unity-progress-bar-empty" style="display: none">
           <div id="unity-progress-bar-full"></div>
         </div>
@@ -45,48 +43,53 @@
       </div>
     </div>
     <script>
-            const buildUrl = "Build";
-            const loaderUrl = buildUrl + "/build.loader.js";
-            const config = {
-              dataUrl: buildUrl + "/build.data.unityweb",
-              frameworkUrl: buildUrl + "/build.framework.js.unityweb",
-              codeUrl: buildUrl + "/build.wasm.unityweb",
-              streamingAssetsUrl: "StreamingAssets",
-              companyName: "Sermtat",
-              productName: "U.VR-Movie-WebGL",
-              productVersion: "0.72-31-Oct-2023 11:49 PM",
-            };
+      const buildUrl = "Build";
+      const loaderUrl = buildUrl + "/build.loader.js";
+      const config = {
+        dataUrl: buildUrl + "/build.data.unityweb",
+        frameworkUrl: buildUrl + "/build.framework.js.unityweb",
+        codeUrl: buildUrl + "/build.wasm.unityweb",
+        streamingAssetsUrl: "StreamingAssets",
+        companyName: "Sermtat",
+        productName: "U.VR-Movie-WebGL",
+        productVersion: "0.72-31-Oct-2023 11:49 PM",
+      };
 
-            const container = document.querySelector("#unity-container");
-            const canvas = document.querySelector("#unity-canvas");
-            const loadingCover = document.querySelector("#loading-cover");
-            const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
-            const progressBarFull = document.querySelector("#unity-progress-bar-full");
-            const spinner = document.querySelector('.spinner');
+      const container = document.querySelector("#unity-container");
+      const canvas = document.querySelector("#unity-canvas");
+      const loadingCover = document.querySelector("#loading-cover");
+      const progressBarEmpty = document.querySelector(
+        "#unity-progress-bar-empty"
+      );
+      const progressBarFull = document.querySelector(
+        "#unity-progress-bar-full"
+      );
+      const spinner = document.querySelector(".spinner");
 
+      if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+        container.className = "unity-mobile";
+        config.devicePixelRatio = 1;
+      }
+      loadingCover.style.display = "";
 
-            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
-              container.className = "unity-mobile";
-              config.devicePixelRatio = 1;
-            }
-            loadingCover.style.display = "";
-
-            const script = document.createElement("script");
-            script.src = loaderUrl;
-            script.onload = () => {
-              createUnityInstance(canvas, config, (progress) => {
-                spinner.style.display = "none";
-                progressBarEmpty.style.display = "";
-                progressBarFull.style.width = `${100 * progress}%`;
-              }).then((unityInstance) => {
-                this.unityInstance = unityInstance;
-                this.firebase = firebase;
-                loadingCover.style.display = "none";
-              }).catch((message) => {
-                alert(message);
-              });
-            };
-            document.body.appendChild(script);
+      const script = document.createElement("script");
+      script.src = loaderUrl;
+      script.onload = () => {
+        createUnityInstance(canvas, config, (progress) => {
+          spinner.style.display = "none";
+          progressBarEmpty.style.display = "";
+          progressBarFull.style.width = `${100 * progress}%`;
+        })
+          .then((unityInstance) => {
+            this.unityInstance = unityInstance;
+            this.firebase = firebase;
+            loadingCover.style.display = "none";
+          })
+          .catch((message) => {
+            alert(message);
+          });
+      };
+      document.body.appendChild(script);
     </script>
   </body>
 </html>
