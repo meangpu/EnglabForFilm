@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, user-scalable=no"
+    />
+    <meta property="og:title" content="EngLabForFilm" />
+    <meta
+      property="og:description"
+      content="application help you learn basic english word used in film production"
+    />
+    <meta
+      property="og:image"
+      content="https://raw.githubusercontent.com/meangpu/EnglabForFilm/dccc904df87a498a2d7001afe8ff9331dbc9187e/Web-Image-Preview/web-preview-image.webp"
+    />
+    <title>EngLabForFilm</title>
+    <link rel="shortcut icon" href="TemplateData/favicon.ico" />
+    <link rel="stylesheet" href="TemplateData/style.css" />
+  </head>
+
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.5.2/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAx9SUYHQQCQxC5VYa0JCHwnUo6tsToEOo",
+      authDomain: "englabforfilm-ab73b.firebaseapp.com",
+      databaseURL:
+        "https://englabforfilm-ab73b-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "englabforfilm-ab73b",
+      storageBucket: "englabforfilm-ab73b.appspot.com",
+      messagingSenderId: "1075267591555",
+      appId: "1:1075267591555:web:50718062b1c59177acaab6",
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <body
+    class="dark"
+    style="background-color: #000"
+  >
+    <div id="unity-container" class="unity-desktop">
+      <canvas id="unity-canvas"></canvas>
+    </div>
+    <div id="loading-cover" style="display: none">
+      <div id="unity-loading-bar">
+        <div id="unity-logo"><img src="bfk_logo.png" /></div>
+        <div id="unity-progress-bar-empty" style="display: none">
+          <div id="unity-progress-bar-full"></div>
+        </div>
+        <div class="spinner"></div>
+      </div>
+    </div>
+    <script>
+            const buildUrl = "Build";
+            const loaderUrl = buildUrl + "/EnglabForFilm.loader.js";
+            const config = {
+              dataUrl: buildUrl + "/EnglabForFilm.data.unityweb",
+              frameworkUrl: buildUrl + "/EnglabForFilm.framework.js.unityweb",
+              codeUrl: buildUrl + "/EnglabForFilm.wasm.unityweb",
+              streamingAssetsUrl: "StreamingAssets",
+              companyName: "Sermtat",
+              productName: "U.VR-Movie-WebGL",
+              productVersion: "1.2-30-Jan-2024 12:57 AM",
+            };
+
+            const container = document.querySelector("#unity-container");
+            const canvas = document.querySelector("#unity-canvas");
+            const loadingCover = document.querySelector("#loading-cover");
+            const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
+            const progressBarFull = document.querySelector("#unity-progress-bar-full");
+            const spinner = document.querySelector('.spinner');
+
+
+            if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
+              container.className = "unity-mobile";
+              config.devicePixelRatio = 1;
+            }
+            loadingCover.style.display = "";
+
+            const script = document.createElement("script");
+            script.src = loaderUrl;
+            script.onload = () => {
+              createUnityInstance(canvas, config, (progress) => {
+                spinner.style.display = "none";
+                progressBarEmpty.style.display = "";
+                progressBarFull.style.width = `${100 * progress}%`;
+              }).then((unityInstance) => {
+                this.unityInstance = unityInstance;
+                this.firebase = firebase;
+                loadingCover.style.display = "none";
+              }).catch((message) => {
+                alert(message);
+              });
+            };
+            document.body.appendChild(script);
+    </script>
+  </body>
+</html>
