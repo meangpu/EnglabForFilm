@@ -80,6 +80,11 @@ nav a {
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
 }
 
+.hoverImg:hover {
+  transform: rotateY(10deg) rotateX(8deg) scale(1.02);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.7);
+}
+
 @media (max-width: 767px) {
   .image-grid {
     grid-template-columns: 1fr;
